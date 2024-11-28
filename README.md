@@ -27,3 +27,12 @@
 ```bash
 go run main.go
 ```
+## 截图
+准备抽奖
+![image](https://github.com/user-attachments/assets/d6d6433d-1ed1-4d92-90dd-92d1aaecce4d)
+正在抽奖
+![image](https://github.com/user-attachments/assets/b337d3e1-8673-4764-8be5-0c1e817bc022)
+开奖
+![image](https://github.com/user-attachments/assets/60044a58-02c1-40d0-b376-58ffce45a2c0)
+
+
