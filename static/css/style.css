@@ -1,459 +1,604 @@
 :root {
     --primary-color: #007AFF;
+    --secondary-color: #5856D6;
     --background-color: #F5F5F7;
+    --surface-color: #FFFFFF;
     --text-color: #1D1D1F;
+    --text-secondary: #86868B;
     --border-radius: 12px;
+    --transition-speed: 0.3s;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     max-width: 800px;
     margin: 40px auto;
     padding: 20px;
+    flex: 1;
 }
 
 h1 {
     text-align: center;
     margin-bottom: 40px;
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
 }
 
 .input-section {
-    background: white;
-    padding: 24px;
+    background: var(--surface-color);
+    padding: 32px;
     border-radius: var(--border-radius);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     margin-bottom: 24px;
+    transition: all var(--transition-speed) ease;
+    max-height: 1000px;
+    overflow: hidden;
 }
 
-.input-group {
-    margin-bottom: 20px;
+.input-section.drawing {
+    transform: scale(0.98);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.input-section.drawing textarea,
+.input-section.drawing input {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.form-group {
+    margin-bottom: 24px;
 }
 
 label {
     display: block;
     margin-bottom: 8px;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
 }
 
 textarea {
     width: 100%;
     height: 150px;
-    padding: 12px;
-    border: 1px solid #D1D1D6;
+    padding: 16px;
+    border: 2px solid #E5E5EA;
     border-radius: var(--border-radius);
     resize: vertical;
     font-size: 16px;
+    transition: border-color var(--transition-speed) ease;
+    line-height: 1.5;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0,122,255,0.1);
 }
 
 input[type="number"] {
-    width: 100px;
-    padding: 8px;
-    border: 1px solid #D1D1D6;
+    width: 120px;
+    padding: 12px 16px;
+    border: 2px solid #E5E5EA;
     border-radius: var(--border-radius);
     font-size: 16px;
+    transition: all var(--transition-speed) ease;
 }
 
-.primary-button {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: var(--border-radius);
-    font-size: 16px;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.primary-button:hover {
-    transform: translateY(-1px);
-}
-
-.result-section {
-    background: white;
-    padding: 24px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.lottery-animation {
-    height: 100px;
-    margin-bottom: 24px;
-    overflow: hidden;
-}
-
-.slot-machine {
-    text-align: center;
-    font-size: 24px;
-    font-weight: 600;
-}
-
-.winners-list {
-    margin: 20px 0;
-    padding: 20px;
-    border-radius: var(--border-radius);
-    background: var(--background-color);
-}
-
-.winner-item {
-    padding: 12px;
-    margin: 8px 0;
-    background: white;
-    border-radius: var(--border-radius);
-    animation: fadeIn 0.5s ease-out;
-}
-
-.verification {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #86868B;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes spin {
-    from { transform: translateY(0); }
-    to { transform: translateY(-100%); }
-}
-
-.rolling {
-    text-align: center;
-    font-size: 1.2em;
-    margin: 20px 0;
-}
-
-.rolling-name {
-    animation: slideIn 0.3s ease-out;
-    padding: 10px;
-    margin: 5px 0;
-    background: #f0f0f0;
-    border-radius: 5px;
-    transition: all 0.3s;
-}
-
-.winner-name {
-    font-size: 1.5em;
-    color: #e74c3c;
-    margin: 10px 0;
-    padding: 10px;
-    background: #fff;
-    border-radius: 5px;
-    animation: winnerAppear 0.5s ease-out;
-}
-
-.winner-icon {
-    margin-right: 10px;
-    animation: rotate 2s infinite linear;
-    display: inline-block;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes winnerAppear {
-    0% {
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.winner {
-    text-align: center;
-    padding: 20px;
-    background: #f8f8f8;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.seed {
-    font-size: 0.8em;
-    color: #666;
-    margin-top: 20px;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0.3; }
-    50% { opacity: 1; }
-    100% { opacity: 0.3; }
-}
-
-/* 基础样式 */
-body {
-    font-family: 'Arial', sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-}
-
-.container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-/* 输入区域样式 */
-.input-section {
-    margin-bottom: 30px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-    font-weight: bold;
-}
-
-textarea, input {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-textarea:focus, input:focus {
+input[type="number"]:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0,122,255,0.1);
 }
 
-/* 按钮样式 */
-#drawButton {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-#drawButton:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-#drawButton:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-#drawButton:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
-/* 结果显示样式 */
-.rolling {
-    text-align: center;
-    padding: 20px;
-    background: #f8f8f8;
-    border-radius: 8px;
-    margin: 20px 0;
-}
-
-.rolling-name {
-    padding: 10px;
-    margin: 5px 0;
-    background: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.winner {
-    text-align: center;
-    padding: 30px;
-    background: #f8f8f8;
-    border-radius: 10px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.winner h3 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-.winner-name {
-    font-size: 1.5em;
-    color: #e74c3c;
-    margin: 15px 0;
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.winner-name:hover {
-    transform: translateY(-2px);
-}
-
-.winner-icon {
-    margin-right: 10px;
-}
-
-.seed {
-    margin-top: 20px;
-    font-size: 0.9em;
-    color: #666;
-    padding: 10px;
-    background: rgba(0,0,0,0.05);
-    border-radius: 5px;
-}
-
-/* 隐藏元素的动画效果 */
-.fade-out {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.5s ease;
-}
-
-/* 添加按钮容器样式 */
 .button-container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 32px 0;
 }
 
-/* 停止按钮样式 */
-#stopButton {
-    background-color: #e74c3c;
+.primary-button,
+#drawButton,
+#stopButton,
+#resetButton {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 12px 24px;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    animation: pulse 1.5s infinite;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,122,255,0.2);
+    min-width: 160px;
+}
+
+.primary-button:hover,
+#drawButton:hover,
+#stopButton:hover,
+#resetButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,122,255,0.3);
+}
+
+.primary-button:active,
+#drawButton:active,
+#stopButton:active,
+#resetButton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0,122,255,0.2);
+}
+
+#stopButton {
+    background: #FF3B30;
+    box-shadow: 0 4px 12px rgba(255,59,48,0.2);
 }
 
 #stopButton:hover {
-    background-color: #c0392b;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background: #ff453a;
+    box-shadow: 0 6px 16px rgba(255,59,48,0.3);
 }
 
-#stopButton:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+#resetButton {
+    background: linear-gradient(135deg, #34C759, #30D158);
+    box-shadow: 0 4px 12px rgba(52,199,89,0.2);
 }
 
-/* 重新抽奖按钮样式 */
-.reset-button {
-    background-color: #3498db;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+#resetButton:hover {
+    box-shadow: 0 6px 16px rgba(52,199,89,0.3);
 }
 
-.reset-button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-/* 添加脉冲动画 */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* 修改按钮容器样式 */
-.button-container {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.result {
+    background: var(--surface-color);
+    padding: 32px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     text-align: center;
-    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 计时器样式 */
+.result.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .timer {
-    font-size: 24px;
-    color: #666;
-    margin-top: 10px;
+    font-family: "SF Mono", SFMono-Regular, ui-monospace, Monaco, monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-align: center;
+    margin: 16px 0;
+    letter-spacing: 0.5px;
+}
+
+.rolling {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.rolling-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 12px 0;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(0,122,255,0.1), rgba(88,86,214,0.1));
+    border-radius: var(--border-radius);
+    animation: pulse 1.5s infinite;
+}
+
+.winner {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 16px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(0,122,255,0.1), rgba(88,86,214,0.1));
+    border-radius: var(--border-radius);
+    animation: winner-appear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.seed-info {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(0,0,0,0.03);
+    border-radius: var(--border-radius);
+    font-family: "SF Mono", SFMono-Regular, ui-monospace, Monaco, monospace;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    word-break: break-all;
+}
+
+.seed-info code {
+    display: block;
+    padding: 10px;
+    background: #fff;
+    border-radius: 4px;
+    margin: 10px 0;
     font-family: monospace;
 }
 
-/* 调整主容器样式 */
-.container {
+.textarea-container {
     position: relative;
-    min-height: 100vh;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 100%;
 }
 
-/* 输入区域在开始抽奖时淡出 */
+.textarea-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: var(--border-radius);
+    background: rgba(0,122,255,0.1);
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.action-button:hover {
+    background: rgba(0,122,255,0.2);
+}
+
+.action-button:active {
+    transform: translateY(1px);
+}
+
+.action-button .icon {
+    font-size: 1.1em;
+}
+
+.helper-text {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes winner-appear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+        margin: 20px auto;
+    }
+    
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 24px;
+    }
+    
+    .input-section {
+        padding: 24px;
+    }
+    
+    #drawButton, #stopButton {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+    
+    .rolling-name, .winner {
+        font-size: 1.5rem;
+        padding: 12px;
+    }
+}
+
+/* 结果区域样式 */
+#result {
+    display: none;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    overflow: visible;
+}
+
+#result.show {
+    display: block;
+}
+
+/* 卡片容器样式 */
+.cards-container {
+    position: relative;
+    min-height: 300px;
+    margin: 20px auto;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    overflow: visible;
+}
+
+/* 卡片基础样式 */
+.card {
+    position: relative;
+    width: 200px;
+    height: 280px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+    
+    /* 扑克牌纹理 */
+    background-image: 
+        linear-gradient(45deg, 
+            rgba(0, 122, 255, 0.05) 25%, 
+            transparent 25%, 
+            transparent 75%, 
+            rgba(0, 122, 255, 0.05) 75%),
+        linear-gradient(45deg, 
+            rgba(0, 122, 255, 0.05) 25%, 
+            transparent 25%, 
+            transparent 75%, 
+            rgba(0, 122, 255, 0.05) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    border: 1px solid rgba(0, 122, 255, 0.2);
+}
+
+.card-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+}
+
+.card-number {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 1.2em;
+    color: #888;
+    font-family: "SF Mono", monospace;
+}
+
+.card-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    word-break: break-all;
+    color: var(--text-color);
+    max-width: 90%;
+}
+
+/* 洗牌动画 */
+.shuffle-left {
+    transform: translate3d(-150%, 0, 50px) rotateY(-30deg);
+}
+
+.shuffle-right {
+    transform: translate3d(150%, 0, 50px) rotateY(30deg);
+}
+
+.combine {
+    transform: translate3d(0, 0, 0) rotateY(0);
+}
+
+.deal {
+    animation: dealCard 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes dealCard {
+    0% {
+        transform: translate3d(0, -100vh, 100px) rotateX(180deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translate3d(0, 0, 0) rotateX(0);
+        opacity: 1;
+    }
+}
+
+/* 中奖卡片样式 */
+.winner {
+    animation: winnerCard 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    border: 2px solid #ffd700;
+    box-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.5),
+        0 0 40px rgba(255, 215, 0, 0.3);
+    background-color: #fffdf0;
+}
+
+@keyframes winnerCard {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* 进度条样式 */
+.shuffle-progress {
+    width: 100%;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.shuffle-progress-bar {
+    height: 100%;
+    background: var(--primary-color);
+    width: 0;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shuffle-status {
+    text-align: center;
+    color: #666;
+    margin: 10px 0;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+/* 随机种子信息样式 */
+.seed-info {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+.seed-info code {
+    display: block;
+    padding: 12px;
+    background: white;
+    border-radius: 6px;
+    margin: 10px 0;
+    font-family: "SF Mono", monospace;
+    border: 1px solid #e9ecef;
+    word-break: break-all;
+}
+
+.timer {
+    font-size: 1.2em;
+    color: var(--primary-color);
+    text-align: center;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+/* 按钮样式 */
+#stopButton {
+    background-color: #ff3b30;
+    border-color: #ff3b30;
+}
+
+#stopButton:hover {
+    background-color: #ff453a;
+    border-color: #ff453a;
+}
+
+/* 抽奖状态样式 */
 .input-section.drawing {
-    opacity: 0.1;
+    opacity: 0.7;
     pointer-events: none;
+    transform: scale(0.98);
+    transition: all 0.3s ease;
+}
+
+.app-footer {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.app-footer small {
+    color: var(--text-secondary);
+}
+
+.participant-list {
+    margin-top: 32px;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: var(--border-radius);
+}
+
+.participant-list h3 {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.participant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.participant-item {
+    padding: 8px 12px;
+    background: var(--surface-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.winner-section {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

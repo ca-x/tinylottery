@@ -1,28 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>抽奖系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="一个公平、透明的在线抽奖系统">
+    <title>Tiny Lottery</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#007AFF">
 </head>
 <body>
     <div class="container">
-        <div class="input-section">
-            <h1>抽奖系统</h1>
-            <div class="form-group">
-                <label for="participants">参与者名单（每行一个名字）：</label>
-                <textarea id="participants" rows="10" cols="50"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="drawCount">抽取人数：</label>
-                <input type="number" id="drawCount" min="1" value="1">
-            </div>
-        </div>
-        <div class="button-container">
-            <button id="drawButton">开始抽奖</button>
-        </div>
-        <div id="result"></div>
+        <main>
+            <section class="input-section" aria-labelledby="lottery-title">
+                <h1 id="lottery-title">Tiny Lottery抽奖系统</h1>
+                <form id="lotteryForm" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="participants">参与者名单</label>
+                        <div class="textarea-container">
+                            <textarea 
+                                id="participants" 
+                                name="participants"
+                                rows="10" 
+                                placeholder="请输入参与者姓名，每行一个"
+                                aria-required="true"
+                                required></textarea>
+                            <div class="textarea-actions">
+                                <button type="button" id="importBtn" class="action-button">
+                                    <span class="icon">📄</span> 导入名单
+                                </button>
+                                <button type="button" id="clearBtn" class="action-button">
+                                    <span class="icon">🗑️</span> 清空
+                                </button>
+                                <input type="file" id="fileInput" accept=".txt,.csv" style="display: none;">
+                            </div>
+                        </div>
+                        <small class="helper-text">支持文本文件导入（.txt, .csv），每行一个名字</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="drawCount">抽取人数</label>
+                        <input 
+                            type="number" 
+                            id="drawCount" 
+                            name="drawCount"
+                            min="1" 
+                            value="1"
+                            aria-required="true"
+                            required>
+                        <small class="helper-text">请输入要抽取的人数</small>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="button-container" aria-label="抽奖控制">
+                <button 
+                    id="drawButton" 
+                    class="primary-button"
+                    aria-label="开始抽奖">
+                    开始抽奖
+                </button>
+            </section>
+            
+            <section 
+                id="result" 
+                class="result" 
+                aria-live="polite"
+                aria-atomic="true">
+            </section>
+        </main>
+        
+        <footer class="app-footer">
+            <small> © 2024  czyt</small>
+        </footer>
     </div>
+    
     <script src="/static/js/script.js"></script>
 </body>
 </html>
